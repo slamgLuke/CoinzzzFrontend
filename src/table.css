@@ -1,0 +1,16 @@
+.star {
+    fill: #FFCD00;
+    stroke: #FFCD00;
+    stroke-width: 0;
+    fill-opacity: 1;
+}
+
+#star:hover {
+    opacity: 0.5;
+}
+
+.unselected_star {
+    stroke: #FFCD00;
+    stroke-width: 1;
+    fill-opacity: 0;
+}
