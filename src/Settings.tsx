@@ -1,7 +1,7 @@
 export function Settings() {
-    return (
-        <div>asd</div>
-    )
+  return (
+    <div>asd</div>
+  )
 }
 
-export default Settings
+export default Settings;

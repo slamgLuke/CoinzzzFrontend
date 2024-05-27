@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 function handleLogin() {
-  window.location.href = "/"
+  window.location.href = "/";
 }
 
 export function Login() {
