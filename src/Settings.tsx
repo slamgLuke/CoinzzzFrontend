@@ -1,6 +1,6 @@
 export function Settings() {
     return (
-        <div></div>
+        <div>asd</div>
     )
 }
 
