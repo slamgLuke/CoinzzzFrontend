@@ -20,8 +20,24 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { useState } from 'react';
+
+const activeLinkCss = "flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+const activeLinkCssMobile = "mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
+const inactiveLinkCss = "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+const inactiveLinkCssMobile = "mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
 
 export function MainBar() {
+    const [activeLink, setActiveLink] = useState(window.location.pathname.split("/")[1])
+
+    function setCss(link: string) {
+        return activeLink === link ? activeLinkCss : inactiveLinkCss
+    }
+
+    function setCssMobile(link: string) {
+        return activeLink === link ? activeLinkCssMobile : inactiveLinkCssMobile
+    }
+
     return (
         <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
             <div className="hidden border-r bg-muted/40 md:block">
@@ -35,22 +51,25 @@ export function MainBar() {
                     <div className="flex-1">
                         <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
                             <Link
-                                to="/"
-                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                                to="dashboard"
+                                className={setCss("dashboard")}
+                                onClick={() => setActiveLink("dashboard")}
                             >
                                 <Home className="h-4 w-4" />
                                 Dashboard
                             </Link>
                             <Link
                                 to="portfolio"
-                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                                className={setCss("portfolio")}
+                                onClick={() => setActiveLink("portfolio")}
                             >
                                 <BriefcaseBusiness className="h-4 w-4" />
                                 Portfolio
                             </Link>
                             <Link
                                 to="settings"
-                                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+                                className={setCss("settings")}
+                                onClick={() => setActiveLink("settings")}
                             >
                                 <Settings className="h-4 w-4" />
                                 Settings{" "}
@@ -75,29 +94,32 @@ export function MainBar() {
                         <SheetContent side="left" className="flex flex-col">
                             <nav className="grid gap-2 text-lg font-medium">
                                 <Link
-                                    to="#"
+                                    to="/"
                                     className="flex items-center gap-2 text-lg font-semibold"
                                 >
                                     <Coins className="h-6 w-6" />
                                     <span className="sr-only">Acme Inc</span>
                                 </Link>
                                 <Link
-                                    to="/"
-                                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                                    to="dashboard"
+                                    className={setCssMobile("dashboard")}
+                                    onClick={() => setActiveLink("dashboard")}
                                 >
                                     <Home className="h-5 w-5" />
                                     Dashboard
                                 </Link>
                                 <Link
                                     to="portfolio"
-                                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
+                                    className={setCssMobile("portfolio")}
+                                    onClick={() => setActiveLink("portfolio")}
                                 >
                                     <BriefcaseBusiness className="h-5 w-5" />
                                     Portfolio
                                 </Link>
                                 <Link
                                     to="settings"
-                                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                                    className={setCssMobile("settings")}
+                                    onClick={() => setActiveLink("settings")}
                                 >
                                     <Settings className="h-5 w-5" />
                                     Settings

@@ -15,6 +15,33 @@ import {
 } from "@/components/ui/table"
 import plot from "./assets/plot.png"
 
+const transaction_data = [
+    {
+        coin: 'BTC',
+        type: 'Buy',
+        date: '14-04-2024',
+        price: '61,879.00',
+        quantity: '0.01',
+        usdtValue: '+ $618.79',
+    },
+    {
+        coin: 'BTC',
+        type: 'Sell',
+        date: '14-04-2024',
+        price: '61,879.00',
+        quantity: '0.01',
+        usdtValue: '- $618.79',
+    },
+    {
+        coin: 'BTC',
+        type: 'Buy',
+        date: '14-04-2024',
+        price: '61,879.00',
+        quantity: '0.01',
+        usdtValue: '+ $618.79',
+    },
+];
+
 function transactionTable() {
     return (
         <Card className="margin-0">
@@ -30,47 +57,21 @@ function transactionTable() {
                             <TableHead className="text-right">USDT Value</TableHead>
                         </TableRow>
                     </TableHeader>
-
                     <TableBody>
-                        <TableRow className="bg-accent">
-                            <TableCell>
-                                <div className="font-medium">BTC</div>
-                            </TableCell>
-                            <TableCell className="sm:table-cell">
-                                <Badge className="text-xs" variant="default">Buy</Badge>
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">14-04-2024</TableCell>
-                            <TableCell className="hidden sm:table-cell">61,879.00</TableCell>
-                            <TableCell className="sm:table-cell">0.01</TableCell>
-                            <TableCell className="text-right">+ $618.79</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell>
-                                <div className="font-medium">BTC</div>
-                            </TableCell>
-                            <TableCell className="sm:table-cell">
-                                <Badge className="text-xs" variant="secondary">Sell</Badge>
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">14-04-2024</TableCell>
-                            <TableCell className="hidden sm:table-cell">61,879.00</TableCell>
-                            <TableCell className="sm:table-cell">0.01</TableCell>
-                            <TableCell className="text-right">- $618.79</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell>
-                                <div className="font-medium">BTC</div>
-                            </TableCell>
-                            <TableCell className="sm:table-cell">
-                                <Badge className="text-xs" variant="default">Buy</Badge>
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">14-04-2024</TableCell>
-                            <TableCell className="hidden sm:table-cell">61,879.00</TableCell>
-                            <TableCell className="sm:table-cell">0.01</TableCell>
-                            <TableCell className="text-right">+ $618.79</TableCell>
-                        </TableRow>
-
+                        {transaction_data.map((item, index) => (
+                            <TableRow key={index}>
+                                <TableCell>
+                                    <div className="font-medium">{item.coin}</div>
+                                </TableCell>
+                                <TableCell className="sm:table-cell">
+                                    <Badge className="text-xs" variant={item.type.toLowerCase() === "buy" ? "default" : "secondary"}>{item.type}</Badge>
+                                </TableCell>
+                                <TableCell className="hidden md:table-cell">{item.date}</TableCell>
+                                <TableCell className="hidden sm:table-cell">{item.price}</TableCell>
+                                <TableCell className="sm:table-cell">{item.quantity}</TableCell>
+                                <TableCell className="text-right">{item.usdtValue}</TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </CardContent>
