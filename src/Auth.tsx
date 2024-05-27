@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+function handleLogin() {
+  window.location.href = "/"
+}
+
 export function Login() {
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -37,13 +41,13 @@ export function Login() {
               </div>
               <Input id="password" type="password" required />
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" onClick={handleLogin}>
               Login
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
-            <Link to="#" className="underline">
+            <Link to="/register" className="underline">
               Sign up
             </Link>
           </div>
@@ -89,7 +93,7 @@ export function Register() {
           </div>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
-            <Link to="#" className="underline">
+            <Link to="/login" className="underline">
               Log in
             </Link>
           </div>
