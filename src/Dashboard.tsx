@@ -4,9 +4,19 @@ import FollowingListTable from "./FollowingListTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import "./table.css";
 import FollowCoinMenu from "./components/FollowCoinMenu";
+// temporal
+import { useUser } from "./UserContext";
 
 export function Dashboard() {
 	const [activeTab, setActiveTab] = useState("monedas"); // Estado para la pestaña activa
+
+	const { userId, setUserId } = useUser();
+
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setUserId(event.target.value);
+		console.log(userId);
+	};
+
 	return (
 		<div className="flex flex-col h-full">
 			<Tabs
@@ -18,6 +28,12 @@ export function Dashboard() {
 					<TabsList className="grid w-full grid-cols-2 w-[400px]">
 						<TabsTrigger value="monedas">Monedas</TabsTrigger>
 						<TabsTrigger value="seguimiento">Lista de seguimiento</TabsTrigger>
+						<input
+							type="text"
+							value={userId}
+							onChange={handleInputChange}
+							placeholder="Enter User ID"
+						/>
 					</TabsList>
 					{activeTab === "seguimiento" && (
 						<div className="ml-auto pr-4">

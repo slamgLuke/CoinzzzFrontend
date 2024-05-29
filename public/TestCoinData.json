@@ -1,0 +1,72 @@
+[
+	{
+		"symbol": "BTC",
+		"marketCap": "20B",
+		"price": "69,523",
+		"today": "+2.12%",
+		"week": "+8.21%"
+	},
+	{
+		"symbol": "ETH",
+		"marketCap": "15B",
+		"price": "4,123",
+		"today": "+1.5%",
+		"week": "+5.4%"
+	},
+	{
+		"symbol": "BNB",
+		"marketCap": "10B",
+		"price": "1,123",
+		"today": "+0.5%",
+		"week": "+3.4%"
+	},
+	{
+		"symbol": "ADA",
+		"marketCap": "5B",
+		"price": "0.123",
+		"today": "+0.5%",
+		"week": "+3.4%"
+	},
+	{
+		"symbol": "XRP",
+		"marketCap": "5B",
+		"price": "0.123",
+		"today": "+0.5%",
+		"week": "+3.4%"
+	},
+	{
+		"symbol": "DOGE",
+		"marketCap": "5B",
+		"price": "0.123",
+		"today": "+0.5%",
+		"week": "+3.4%"
+	},
+	{
+		"symbol": "DOT",
+		"marketCap": "5B",
+		"price": "0.123",
+		"today": "+0.5%",
+		"week": "+3.4%"
+	},
+	{
+		"symbol": "UNI",
+		"marketCap": "5B",
+		"price": "0.123",
+		"today": "+0.5%",
+		"week": "+3.4%"
+	},
+	{
+		"symbol": "LTC",
+		"marketCap": "5B",
+		"price": "0.123",
+		"today": "+0.5%",
+		"week": "+3.4%"
+	},
+	{
+		"symbol": "LINK",
+		"marketCap": "5B",
+		"price": "0.123",
+		"today": "+0.5%",
+		"week": "+3.4%"
+	}
+]

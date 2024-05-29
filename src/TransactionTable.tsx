@@ -36,7 +36,8 @@ const transaction_data = [
   },
 ];
 
-export function TransactionTable() {
+export function TransactionTable({ transactions }) {
+  console.log(transactions);
   return (
     <Card className="margin-0">
       <CardContent>
@@ -58,10 +59,10 @@ export function TransactionTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {transaction_data.map((item, index) => (
+            {transactions.map((item, index) => (
               <TableRow key={index}>
                 <TableCell>
-                  <div className="font-medium">{item.coin}</div>
+                  <div className="font-medium">{item.symbol}</div>
                 </TableCell>
                 <TableCell className="sm:table-cell">
                   <Badge
@@ -82,7 +83,7 @@ export function TransactionTable() {
                   {item.price}
                 </TableCell>
                 <TableCell className="sm:table-cell">{item.quantity}</TableCell>
-                <TableCell className="text-right">{item.usdtValue}</TableCell>
+                <TableCell className="text-right">{item.value}</TableCell>
               </TableRow>
             ))}
           </TableBody>

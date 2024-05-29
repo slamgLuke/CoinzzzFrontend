@@ -5,28 +5,50 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 
-const follow_data = [
-  {
-    name: 'BTC',
-    marketCap: '20B',
-    price: '69,523',
-    today: '+2.12%',
-    week: '+8.21%',
-    favorite: false,
-  },
-  {
-    name: 'ETH',
-    marketCap: '15B',
-    price: '4,123',
-    today: '+1.5%',
-    week: '+5.4%',
-    favorite: true,
-  }
-];
+import { useEffect, useState } from "react";
+import { useUser } from "./UserContext";
 
 export function FollowingListTable() {
+  const { userId } = useUser();
+  const [followingList, setFollowingList] = useState<string[]>([]);
+  const [fullFollowingList, setFullFollowingList] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetch("/TestUsers2.json").then((response) =>
+        response.json(),
+      );
+      const user = data.find((user: { _id: string }) => user._id === userId);
+      if (user) {
+        setFollowingList(user.tracking_list);
+      } else {
+        setFollowingList([]);
+      }
+    };
+
+    if (userId) {
+      fetchData();
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchFullData = async () => {
+      const data = await fetch("/TestCoinData.json").then((response) =>
+        response.json(),
+      );
+      const fullList = followingList.map((symbol) =>
+        data.find((coin: { symbol: string }) => coin.symbol === symbol),
+      );
+      setFullFollowingList(fullList);
+    };
+
+    if (followingList.length > 0) {
+      fetchFullData();
+    }
+  }, [followingList]);
+
   return (
     <Table>
       <TableHeader>
@@ -40,23 +62,23 @@ export function FollowingListTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {follow_data.map((item, index) => (
+        {fullFollowingList.map((coin, index) => (
           <TableRow key={index}>
             <TableCell>
-              <div className="font-medium">{item.name}</div>
+              <div className="font-medium">{coin.symbol}</div>
             </TableCell>
-            <TableCell className="hidden sm:table-cell">{item.marketCap}</TableCell>
-            <TableCell className="text-center">{item.price}</TableCell>
-            <TableCell className="hidden md:table-cell">{item.today}</TableCell>
-            <TableCell className="hidden md:table-cell">{item.week}</TableCell>
             <TableCell className="hidden sm:table-cell">
-              TEMP
+              {coin.marketCap}
             </TableCell>
+            <TableCell className="text-center">{coin.price}</TableCell>
+            <TableCell className="hidden md:table-cell">{coin.today}</TableCell>
+            <TableCell className="hidden md:table-cell">{coin.week}</TableCell>
+            <TableCell className="hidden sm:table-cell">TEMP</TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
-  )
+  );
 }
 
 export default FollowingListTable;

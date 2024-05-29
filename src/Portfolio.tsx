@@ -3,7 +3,47 @@ import TransactionTable from "./TransactionTable";
 import plot from "./assets/plot.png";
 import PortfolioMenu from "./components/PortfolioMenu.tsx";
 
+import { useEffect, useState } from "react";
+import { useUser } from "./UserContext";
+
 export function Portfolio() {
+  const { userId } = useUser();
+  console.log("userId", userId);
+  const [portfolio, setPortfolio] = useState<{
+    networth?: number;
+    transactions?: any[];
+  }>({});
+  const [networth, setNetworth] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    console.log("fetching data");
+    const fetchPortfolio = async () => {
+      const data = await fetch("/TestUsers2.json").then((response) =>
+        response.json(),
+      );
+      const user = data.find((user: { _id: string }) => user._id === userId);
+      if (user) {
+        setPortfolio(user.portfolio);
+      } else {
+        setPortfolio({});
+      }
+    };
+
+    if (userId) {
+      fetchPortfolio();
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (portfolio && portfolio.networth !== undefined) {
+      setNetworth(portfolio.networth);
+    } else {
+      setNetworth(undefined);
+    }
+  }, [portfolio]);
+
+  console.log(portfolio);
+
   return (
     <div>
       <div className="flex flex1 flex-col align-top">
@@ -15,7 +55,7 @@ export function Portfolio() {
         <div className="flex flex-col items-center justify-center pb-16">
           <Card className="items-center justify-center px-16 py-4">
             <CardDescription>Your Net</CardDescription>
-            <CardTitle className="text-4xl">$1,329</CardTitle>
+            <CardTitle className="text-4xl">{networth}</CardTitle>
             <CardTitle className="text-2xl">0.13 BTC</CardTitle>
             <div className="text-xs text-muted-foreground">+25%</div>
             <img src={plot} alt="plot" className="hidden" />
@@ -30,7 +70,7 @@ export function Portfolio() {
             <PortfolioMenu />
           </div>
         </div>
-        <TransactionTable />
+        <TransactionTable transactions={portfolio.transactions} />
       </div>
     </div>
   );

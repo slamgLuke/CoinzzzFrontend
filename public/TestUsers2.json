@@ -1,0 +1,72 @@
+[
+	{
+		"_id": "2024",
+		"email": "user@example.com",
+		"password": "hashed_password",
+		"tracking_list": ["BTC", "ETH", "XRP"],
+		"portfolio": {
+			"networth": 57155.25,
+			"transactions": [
+				{
+					"symbol": "BTC",
+					"type": "buy",
+					"date": "2024-05-25T12:00:00Z",
+					"price": 69500.5,
+					"quantity": 0.5,
+					"value": 34750.25
+				},
+				{
+					"symbol": "ETH",
+					"type": "sell",
+					"date": "2024-05-25T12:00:00Z",
+					"price": 2600,
+					"quantity": 1,
+					"value": 2600
+				},
+				{
+					"symbol": "ETH",
+					"type": "buy",
+					"date": "2024-05-25T12:00:00Z",
+					"price": 2500.5,
+					"quantity": 10,
+					"value": 25005
+				}
+			]
+		}
+	},
+	{
+		"_id": "9999",
+		"email": "user@example.com",
+		"password": "hashed_password",
+		"tracking_list": ["BNB", "ADA", "DOGE"],
+		"portfolio": {
+			"networth": 431,
+			"transactions": [
+				{
+					"symbol": "BNB",
+					"type": "buy",
+					"date": "2024-05-25T12:00:00Z",
+					"price": 420,
+					"quantity": 1,
+					"value": 420
+				},
+				{
+					"symbol": "ADA",
+					"type": "sell",
+					"date": "2024-05-25T12:00:00Z",
+					"price": 1.2,
+					"quantity": 100,
+					"value": 120
+				},
+				{
+					"symbol": "DOGE",
+					"type": "buy",
+					"date": "2024-05-25T12:00:00Z",
+					"price": 0.22,
+					"quantity": 50,
+					"value": 11
+				}
+			]
+		}
+	}
+]
