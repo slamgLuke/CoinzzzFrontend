@@ -88,7 +88,7 @@ export function Portfolio() {
           Your latest recorded transactions
         </div>
         <div className="flex flex-col item-center justify-start">
-          <div className="w-24">
+          <div className="w-24 ml-auto pr-4">
             <InsertTransactionMenu />
           </div>
         </div>
