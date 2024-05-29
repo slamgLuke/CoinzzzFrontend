@@ -6,3 +6,4 @@ build:
 
 deps:
 	npm install
+
