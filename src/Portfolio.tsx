@@ -1,85 +1,69 @@
-import { Badge } from "@/components/ui/badge"
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import TransactionTable from "./TransactionTable";
+import plot from "./assets/plot.png";
+import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import plot from "./assets/plot.png"
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import "./table.css";
+import { Plus, Search } from "lucide-react";
 
-const transaction_data = [
-  {
-    coin: 'BTC',
-    type: 'Buy',
-    date: '14-04-2024',
-    price: '61,879.00',
-    quantity: '0.01',
-    usdtValue: '+ $618.79',
-  },
-  {
-    coin: 'BTC',
-    type: 'Sell',
-    date: '14-04-2024',
-    price: '61,879.00',
-    quantity: '0.01',
-    usdtValue: '- $618.79',
-  },
-  {
-    coin: 'BTC',
-    type: 'Buy',
-    date: '14-04-2024',
-    price: '61,879.00',
-    quantity: '0.01',
-    usdtValue: '+ $618.79',
-  },
-];
-
-function transactionTable() {
+function InsertTransactionMenu() {
   return (
-    <Card className="margin-0">
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="sm:table-cell text-center">Coin</TableHead>
-              <TableHead className="sm:table-cell text-center">Type</TableHead>
-              <TableHead className="hidden md:table-cell text-center">Date</TableHead>
-              <TableHead className="hidden sm:table-cell text-center">Price</TableHead>
-              <TableHead className="sm:table-cell text-center">Quantity</TableHead>
-              <TableHead className="text-right">USDT Value</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {transaction_data.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>
-                  <div className="font-medium">{item.coin}</div>
-                </TableCell>
-                <TableCell className="sm:table-cell">
-                  <Badge className="text-xs" variant={item.type.toLowerCase() === "buy" ? "default" : "secondary"}>{item.type}</Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">{item.date}</TableCell>
-                <TableCell className="hidden sm:table-cell">{item.price}</TableCell>
-                <TableCell className="sm:table-cell">{item.quantity}</TableCell>
-                <TableCell className="text-right">{item.usdtValue}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
-  )
-
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="ghost">
+          <Plus strokeWidth={3} />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <form className="w-full">
+            <div className="relative w-full">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Search coins..."
+                className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-2/3"
+              />
+            </div>
+          </form>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input
+              id="name"
+              defaultValue="Pedro Duarte"
+              className="col-span-3"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="username" className="text-right">
+              Username
+            </Label>
+            <Input
+              id="username"
+              defaultValue="@peduarte"
+              className="col-span-3"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button type="submit">Save changes</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
 }
-
 
 export function Portfolio() {
   return (
@@ -100,11 +84,18 @@ export function Portfolio() {
           </Card>
         </div>
         <CardTitle>Transactions</CardTitle>
-        <div className="text-xs text-muted-foreground pb-8">Your latest recorded transactions</div>
-        {transactionTable()}
+        <div className="text-xs text-muted-foreground pb-8">
+          Your latest recorded transactions
+        </div>
+        <div className="flex flex-col item-center justify-start">
+          <div className="w-24">
+            <InsertTransactionMenu />
+          </div>
+        </div>
+        <TransactionTable />
       </div>
     </div>
-  )
+  );
 }
 
 export default Portfolio;
