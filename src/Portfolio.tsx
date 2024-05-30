@@ -18,28 +18,6 @@ export function Portfolio() {
 
 	useEffect(() => {
 		console.log("fetching data");
-		// const fetchPortfolio = async () => {
-		//   try {
-		//     const data = await fetch("/TestUsers2.json").then((response) =>
-		//       response.json(),
-		//     );
-		//     const user = data.find((user: { _id: string }) => user._id === userId);
-		//     if (user) {
-		//       setPortfolio(user.portfolio);
-		//     } else {
-		//       setPortfolio({});
-		//     }
-		//
-		//     if (userId) {
-		//       fetchPortfolio();
-		//     }
-		//
-		//   } catch (error) {
-		//     console.error("Error fetching portfolio data", error);
-		//   } finally {
-		//     setLoading(false);
-		//   }
-		// }, [userId]);
 
 		const fetchPortfolio = async () => {
 			try {
