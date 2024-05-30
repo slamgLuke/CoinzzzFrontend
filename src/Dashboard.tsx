@@ -28,12 +28,14 @@ export function Dashboard() {
 					<TabsList className="grid w-full grid-cols-2 w-[400px]">
 						<TabsTrigger value="monedas">Monedas</TabsTrigger>
 						<TabsTrigger value="seguimiento">Lista de seguimiento</TabsTrigger>
+            <div className="py-4">
 						<input
 							type="text"
 							value={userId}
 							onChange={handleInputChange}
 							placeholder="Enter User ID"
 						/>
+            </div>
 					</TabsList>
 					{activeTab === "seguimiento" && (
 						<div className="ml-auto pr-4">
@@ -41,10 +43,10 @@ export function Dashboard() {
 						</div>
 					)}
 				</div>
-				<TabsContent value="monedas">
+				<TabsContent value="monedas" className="pt-8">
 					<DashboardTable />
 				</TabsContent>
-				<TabsContent value="seguimiento">
+				<TabsContent value="seguimiento" className="pt-8">
 					<FollowingListTable />
 				</TabsContent>
 			</Tabs>
