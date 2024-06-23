@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -9,7 +10,23 @@ import { Input } from "@/components/ui/input";
 import { Plus, Search } from "lucide-react";
 import FollowCoinTable from "./FollowCoinTable";
 
-export function FollowCoinMenu() {
+export function FollowCoinMenu({ coinData }) {
+	const [searchTerm, setSearchTerm] = useState("");
+
+	const handleSearchChange = (event) => {
+		setSearchTerm(event.target.value);
+	};
+
+	// const filteredCoinData = coinData.filter(
+	// 	(coin) =>
+	// 		coin.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
+	// 		coin.name.toLowerCase().includes(searchTerm.toLowerCase()),
+	// );
+
+	const filteredCoinData = coinData.filter((coin) =>
+		coin.symbol.toLowerCase().includes(searchTerm.toLowerCase()),
+	);
+
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
@@ -26,11 +43,13 @@ export function FollowCoinMenu() {
 								type="search"
 								placeholder="Search coins..."
 								className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-2/3"
+								value={searchTerm}
+								onChange={handleSearchChange}
 							/>
 						</div>
 					</form>
 				</DialogHeader>
-				<FollowCoinTable />
+				<FollowCoinTable coinData={filteredCoinData} />
 			</DialogContent>
 		</Dialog>
 	);

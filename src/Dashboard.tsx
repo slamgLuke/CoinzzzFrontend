@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DashboardTable from "./DashBoardTable";
 import FollowingListTable from "./FollowingListTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,11 +11,23 @@ export function Dashboard() {
 	const [activeTab, setActiveTab] = useState("monedas"); // Estado para la pestaña activa
 
 	const { userId, setUserId } = useUser();
+	const [coinData, setCoinData] = useState([]);
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setUserId(event.target.value);
 		console.log(userId);
 	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const data = await fetch("/TestCoinData.json").then((response) =>
+				response.json(),
+			);
+			setCoinData(data);
+		};
+
+		fetchData();
+	}, []);
 
 	return (
 		<div className="flex flex-col h-full">
@@ -28,26 +40,26 @@ export function Dashboard() {
 					<TabsList className="grid w-full grid-cols-2 w-[400px]">
 						<TabsTrigger value="monedas">Monedas</TabsTrigger>
 						<TabsTrigger value="seguimiento">Lista de seguimiento</TabsTrigger>
-            <div className="py-4">
+					</TabsList>
+					<div className="pl-4">
 						<input
 							type="text"
 							value={userId}
 							onChange={handleInputChange}
 							placeholder="Enter User ID"
 						/>
-            </div>
-					</TabsList>
+					</div>
 					{activeTab === "seguimiento" && (
 						<div className="ml-auto pr-4">
-							<FollowCoinMenu />
+							<FollowCoinMenu coinData={coinData} />
 						</div>
 					)}
 				</div>
 				<TabsContent value="monedas" className="pt-8">
-					<DashboardTable />
+					<DashboardTable coinData={coinData} />
 				</TabsContent>
 				<TabsContent value="seguimiento" className="pt-8">
-					<FollowingListTable />
+					<FollowingListTable coinData={coinData} />
 				</TabsContent>
 			</Tabs>
 		</div>
