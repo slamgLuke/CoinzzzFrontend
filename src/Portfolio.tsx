@@ -1,7 +1,8 @@
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import TransactionTable from "./TransactionTable";
 import plot from "./assets/plot.png";
-import PortfolioMenu from "./components/PortfolioMenu.tsx";
+import PortfolioForm from "./components/PortfolioForm.tsx";
+
 
 import { useEffect, useState } from "react";
 import { useUser } from "./UserContext";
@@ -88,7 +89,7 @@ export function Portfolio() {
 				</div>
 				<div className="flex flex-col item-center justify-start">
 					<div className="w-24 ml-auto pr-4">
-						<PortfolioMenu />
+						<PortfolioForm />
 					</div>
 				</div>
 				<TransactionTable transactions={portfolio.transactions} />
