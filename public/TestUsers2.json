@@ -8,7 +8,7 @@
 			"networth": 57155.25,
 			"transactions": [
 				{
-					"symbol": "BTC",
+					"_id": "BTC",
 					"type": "buy",
 					"date": "2024-05-25T12:00:00Z",
 					"price": 69500.5,
@@ -16,7 +16,7 @@
 					"value": 34750.25
 				},
 				{
-					"symbol": "ETH",
+					"_id": "ETH",
 					"type": "sell",
 					"date": "2024-05-25T12:00:00Z",
 					"price": 2600,
@@ -24,7 +24,7 @@
 					"value": 2600
 				},
 				{
-					"symbol": "ETH",
+					"_id": "ETH",
 					"type": "buy",
 					"date": "2024-05-25T12:00:00Z",
 					"price": 2500.5,
@@ -43,7 +43,7 @@
 			"networth": 431,
 			"transactions": [
 				{
-					"symbol": "BNB",
+					"_id": "BNB",
 					"type": "buy",
 					"date": "2024-05-25T12:00:00Z",
 					"price": 420,
@@ -51,7 +51,7 @@
 					"value": 420
 				},
 				{
-					"symbol": "ADA",
+					"_id": "ADA",
 					"type": "sell",
 					"date": "2024-05-25T12:00:00Z",
 					"price": 1.2,
@@ -59,7 +59,7 @@
 					"value": 120
 				},
 				{
-					"symbol": "DOGE",
+					"_id": "DOGE",
 					"type": "buy",
 					"date": "2024-05-25T12:00:00Z",
 					"price": 0.22,

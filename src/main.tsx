@@ -3,11 +3,14 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { UserProvider } from "./UserContext.tsx";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <UserProvider>
-      <App />
-    </UserProvider>
-  </React.StrictMode>,
+	<React.StrictMode>
+		<UserProvider>
+			<App />
+		</UserProvider>
+	</React.StrictMode>,
 );

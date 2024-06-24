@@ -54,7 +54,7 @@ export default function DashboardTable({ coinData }) {
 				{coinData.map((item, index) => (
 					<TableRow key={index}>
 						<TableCell>
-							<div className="font-medium">{item.symbol}</div>
+							<div className="font-medium">{item._id}</div>
 						</TableCell>
 						<TableCell className="hidden sm:table-cell">
 							{item.marketCap}
@@ -66,7 +66,7 @@ export default function DashboardTable({ coinData }) {
 							<Button
 								variant="ghost"
 								size="icon"
-								onClick={() => toggleFavorite(item.symbol)}
+								onClick={() => toggleFavorite(item._id)}
 							>
 								<Star
 									id="star"

@@ -24,7 +24,7 @@ export function FollowCoinMenu({ coinData }) {
 	// );
 
 	const filteredCoinData = coinData.filter((coin) =>
-		coin.symbol.toLowerCase().includes(searchTerm.toLowerCase()),
+		coin._id.toLowerCase().includes(searchTerm.toLowerCase()),
 	);
 
 	return (

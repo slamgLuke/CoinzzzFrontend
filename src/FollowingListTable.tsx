@@ -35,8 +35,8 @@ export function FollowingListTable({ coinData }) {
 
 	useEffect(() => {
 		const fetchFullData = async () => {
-			const fullList = followingList.map((symbol) =>
-				coinData.find((coin: { symbol: string }) => coin.symbol === symbol),
+			const fullList = followingList.map((_id) =>
+				coinData.find((coin: { _id: string }) => coin._id === _id),
 			);
 			setFullFollowingList(fullList);
 		};
@@ -62,7 +62,7 @@ export function FollowingListTable({ coinData }) {
 				{fullFollowingList.map((coin, index) => (
 					<TableRow key={index}>
 						<TableCell>
-							<div className="font-medium">{coin.symbol}</div>
+							<div className="font-medium">{coin._id}</div>
 						</TableCell>
 						<TableCell className="hidden sm:table-cell">
 							{coin.marketCap}

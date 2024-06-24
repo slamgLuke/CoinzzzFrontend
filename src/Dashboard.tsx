@@ -20,8 +20,9 @@ export function Dashboard() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetch("/TestCoinData.json").then((response) =>
-				response.json(),
+			// const data = await fetch("/TestCoinData.json").then((response) =>
+			const data = await fetch("http://192.168.56.117:3000/currency").then(
+				(response) => response.json(),
 			);
 			setCoinData(data);
 		};

@@ -1,6 +1,6 @@
 [
 	{
-		"symbol": "BTC",
+		"_id": "BTC",
 		"name": "Bitcoin",
 		"icon": "https://cryptologos.cc/logos/bitcoin-btc-logo.svg",
 		"marketCap": "20B",
@@ -9,7 +9,7 @@
 		"week": "+8.21%"
 	},
 	{
-		"symbol": "ETH",
+		"_id": "ETH",
 		"name": "Ethereum",
 		"icon": "https://cryptologos.cc/logos/ethereum-eth-logo.svg",
 		"marketCap": "15B",
@@ -18,7 +18,7 @@
 		"week": "+5.4%"
 	},
 	{
-		"symbol": "BNB",
+		"_id": "BNB",
 		"name": "Binance Coin",
 		"icon": "https://cryptologos.cc/logos/binance-coin-bnb-logo.svg",
 		"marketCap": "10B",
@@ -27,7 +27,7 @@
 		"week": "+3.4%"
 	},
 	{
-		"symbol": "ADA",
+		"_id": "ADA",
 		"name": "Cardano",
 		"icon": "https://cryptologos.cc/logos/cardano-ada-logo.svg",
 		"marketCap": "5B",
@@ -36,7 +36,7 @@
 		"week": "+3.4%"
 	},
 	{
-		"symbol": "XRP",
+		"_id": "XRP",
 		"name": "Ripple",
 		"icon": "https://cryptologos.cc/logos/xrp-xrp-logo.svg",
 		"marketCap": "5B",
@@ -45,7 +45,7 @@
 		"week": "+3.4%"
 	},
 	{
-		"symbol": "DOGE",
+		"_id": "DOGE",
 		"name": "Dogecoin",
 		"icon": "https://cryptologos.cc/logos/dogecoin-doge-logo.svg",
 		"marketCap": "5B",
@@ -54,7 +54,7 @@
 		"week": "+3.4%"
 	},
 	{
-		"symbol": "DOT",
+		"_id": "DOT",
 		"name": "Polkadot",
 		"icon": "https://cryptologos.cc/logos/polkadot-new-dot-logo.svg",
 		"marketCap": "5B",
@@ -63,7 +63,7 @@
 		"week": "+3.4%"
 	},
 	{
-		"symbol": "UNI",
+		"_id": "UNI",
 		"name": "Uniswap",
 		"icon": "https://cryptologos.cc/logos/uniswap-uni-logo.svg",
 		"marketCap": "5B",
@@ -72,7 +72,7 @@
 		"week": "+3.4%"
 	},
 	{
-		"symbol": "LTC",
+		"_id": "LTC",
 		"name": "Litecoin",
 		"icon": "https://cryptologos.cc/logos/litecoin-ltc-logo.svg",
 		"marketCap": "5B",
@@ -81,7 +81,7 @@
 		"week": "+3.4%"
 	},
 	{
-		"symbol": "LINK",
+		"_id": "LINK",
 		"name": "Chainlink",
 		"icon": "https://cryptologos.cc/logos/chainlink-link-logo.svg",
 		"marketCap": "5B",

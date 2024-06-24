@@ -76,7 +76,7 @@ export function TransactionTable({ transactions }) {
 						{transactions.map((item, index) => (
 							<TableRow key={index}>
 								<TableCell>
-									<div className="font-medium">{item.symbol}</div>
+									<div className="font-medium">{item._id}</div>
 								</TableCell>
 								<TableCell className="sm:table-cell">
 									<Badge

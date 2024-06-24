@@ -2,8 +2,8 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export function FollowCoinTable({ coinData }) {
-	const handleCheckedChange = (symbol) => {
-		console.log("Checked coin ID:", symbol);
+	const handleCheckedChange = (_id) => {
+		console.log("Checked coin ID:", _id);
 	};
 
 	return (
@@ -22,7 +22,7 @@ export function FollowCoinTable({ coinData }) {
 								<Checkbox
 									className="h-4 w-4"
 									onCheckedChange={(value) => {
-										handleCheckedChange(item.symbol);
+										handleCheckedChange(item._id);
 									}}
 								/>
 							</TableCell>
