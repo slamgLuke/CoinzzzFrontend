@@ -3,7 +3,7 @@ import { MainLayout } from './MainLayout';
 import { Dashboard } from './Dashboard';
 import { Portfolio } from './Portfolio';
 import { Settings } from './Settings';
-import { Login, Register } from './Auth';
+import { Auth } from './Auth';
 import './App.css'
 
 const router = createBrowserRouter(
@@ -15,8 +15,8 @@ const router = createBrowserRouter(
         <Route path="portfolio" element={<Portfolio />} />
         <Route path="settings" element={<Settings />} />
       </Route>
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
+      <Route path="login" element={<Auth authType="login"/>} />
+      <Route path="register" element={<Auth authType="register" />} />
     </Route>
   )
 )

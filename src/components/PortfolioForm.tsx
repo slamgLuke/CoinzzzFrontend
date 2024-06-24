@@ -58,7 +58,36 @@ export default class PortfolioForm extends React.Component {
     if (!isvalid(this.state)) {
       return;
     }
-    alert("Form submitted: " + this.state.coin + " " + this.state.transactionType + " " + this.state.price + " " + this.state.quantity + " " + this.state.date);
+    // post transaction
+    const postPortfolio = async () => {
+      try {
+        const body = {
+          symbol: this.state.coin,
+          type: this.state.transactionType,
+          date: this.state.date,
+          price: this.state.price,
+          quantity: this.state.quantity,
+          value: this.state.price * this.state.quantity
+        };
+        const response = await fetch("/TestUsers2.json",
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+          });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Posted data:", data);
+      } catch (error) {
+        console.error("Failed to post portfolio data:", error);
+      } finally {
+        alert("Form submitted: " + this.state.coin + " " + this.state.transactionType + " " + this.state.price + " " + this.state.quantity + " " + this.state.date);
+      }
+    }
   }
 
   handleChange(event) {

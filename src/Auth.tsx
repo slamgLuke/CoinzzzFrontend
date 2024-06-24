@@ -3,105 +3,190 @@ import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import React from "react"
 
-function handleLogin() {
-  window.location.href = "/";
-}
+export class Auth extends React.Component {
 
-export function Login() {
-  return (
-    <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-      <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
-          <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Login</h1>
-            <p className="text-balance text-muted-foreground">
-              Enter your email below to login to your account
-            </p>
-          </div>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                <Link
-                  to="#"
-                  className="ml-auto inline-block text-sm underline"
-                >
-                  Forgot your password?
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: "",
+      password: "",
+      AuthType: props.authType
+    }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleLogin = async () => {
+    try {
+      const body = {
+        email: this.state.email,
+        password: this.state.password
+      }
+      const response = await fetch("api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const data = await response.json()
+      console.log("Login data:", data)
+    } catch (error) {
+      console.error("Failed to login:", error)
+    } finally {
+      alert("Login: " + this.state.email + " " + this.state.password);
+    }
+    // TODO: store token
+  }
+
+  handleRegister = async () => {
+    try {
+      const body = {
+        email: this.state.email,
+        password: this.state.password
+      }
+      const response = await fetch("api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const data = await response.json()
+      console.log("Registered data:", data)
+    } catch (error) {
+      console.error("Failed to register:", error)
+    } finally {
+      alert("Register: " + this.state.email + " " + this.state.password);
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    if (this.state.AuthType === "login") {
+      this.handleLogin();
+    } else {
+      this.handleRegister();
+      // reload page to login
+      window.location.href = "/login";
+      window.location.reload();
+    }
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  render() {
+    if (this.state.AuthType === "login") {
+      return (
+        <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+          <div className="flex items-center justify-center py-12">
+            <div className="mx-auto grid w-[350px] gap-6">
+              <div className="grid gap-2 text-center">
+                <h1 className="text-3xl font-bold">Login</h1>
+                <p className="text-balance text-muted-foreground">
+                  Enter your email below to login to your account
+                </p>
+              </div>
+              <div className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="m@example.com"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <div className="flex items-center">
+                    <Label htmlFor="password">Password</Label>
+                    <Link
+                      to="#"
+                      className="ml-auto inline-block text-sm underline"
+                    >
+                      Forgot your password?
+                    </Link>
+                  </div>
+                  <Input id="password" type="password" value={this.state.password} onChange={this.handleChange} required />
+                </div>
+                <Button type="submit" className="w-full" onClick={this.handleSubmit}>
+                  Login
+                </Button>
+              </div>
+              <div className="mt-4 text-center text-sm">
+                Don&apos;t have an account?{" "}
+                <Link to="/register" className="underline" onClick={window.location.reload}>
+                  Register
                 </Link>
               </div>
-              <Input id="password" type="password" required />
             </div>
-            <Button type="submit" className="w-full" onClick={handleLogin}>
-              Login
-            </Button>
           </div>
-          <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Link to="/register" className="underline">
-              Register
-            </Link>
+          <div className="hidden bg-muted lg:block">
+            {/* Image here */}
           </div>
         </div>
-      </div>
-      <div className="hidden bg-muted lg:block">
-        {/* Image here */}
-      </div>
-    </div>
-  )
-}
-
-export function Register() {
-  return (
-    <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-      <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
-          <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Register</h1>
-            <p className="text-balance text-muted-foreground">
-              Enter your email below to create your account
-            </p>
-          </div>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
+      )
+    } else {
+      return (
+        <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+          <div className="flex items-center justify-center py-12">
+            <div className="mx-auto grid w-[350px] gap-6">
+              <div className="grid gap-2 text-center">
+                <h1 className="text-3xl font-bold">Register</h1>
+                <p className="text-balance text-muted-foreground">
+                  Enter your email below to create your account
+                </p>
               </div>
-              <Input id="password" type="password" required />
+              <div className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="m@example.com"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <div className="flex items-center">
+                    <Label htmlFor="password">Password</Label>
+                  </div>
+                  <Input id="password" type="password" value={this.state.password} onChange={this.handleChange} required />
+                </div>
+                <Button type="submit" className="w-full" onClick={this.handleSubmit}>
+                  Register
+                </Button>
+              </div>
+              <div className="mt-4 text-center text-sm">
+                Already have an account?{" "}
+                <Link to="/login" className="underline" onClick={window.location.reload}>
+                  Log in
+                </Link>
+              </div>
             </div>
-            <Button type="submit" className="w-full">
-              Register
-            </Button>
           </div>
-          <div className="mt-4 text-center text-sm">
-            Already have an account?{" "}
-            <Link to="/login" className="underline">
-              Log in
-            </Link>
+          <div className="hidden bg-muted lg:block">
+            {/* Image here */}
           </div>
         </div>
-      </div>
-      <div className="hidden bg-muted lg:block">
-        {/* Image here */}
-      </div>
-    </div>
-  )
+      )
+    }
+  }
 }
