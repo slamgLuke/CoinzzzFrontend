@@ -5,6 +5,7 @@ import PortfolioForm from "./components/PortfolioForm.tsx";
 
 import { useEffect, useState } from "react";
 import { useUser } from "./UserContext";
+import { useOutletContext } from "react-router-dom";
 
 const apiIP = import.meta.env.VITE_CURRENCY_API_IP || "localhost";
 
@@ -17,6 +18,7 @@ export function Portfolio() {
   }>({});
   const [networth, setNetworth] = useState<number | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
+  const { coinData } = useOutletContext();
 
   useEffect(() => {
     console.log("fetching data");
@@ -84,7 +86,7 @@ export function Portfolio() {
         <div className="flex flex-col items-center justify-center pb-16">
           <Card className="items-center justify-center px-16 py-4">
             <CardDescription>Your Net</CardDescription>
-            <CardTitle className="text-4xl">{networth === undefined ? 0 : -parse(networth)} USDT</CardTitle>
+            <CardTitle className="text-4xl">{networth === undefined ? 0 : parse(networth)} USDT</CardTitle>
             <div className="text-xs text-muted-foreground">
               {/* porcentaje de incremento */}
             </div>
@@ -97,7 +99,7 @@ export function Portfolio() {
         </div>
         <div className="flex flex-col item-center justify-start">
           <div className="w-24 ml-auto pr-4">
-            <PortfolioForm />
+            <PortfolioForm coinData={coinData}/>
           </div>
         </div>
         <TransactionTable transactions={portfolio.transactions || []} />

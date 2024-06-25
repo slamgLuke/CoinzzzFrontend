@@ -57,11 +57,11 @@ export function TransactionTable({ transactions }) {
                   {item.date}
                 </TableCell>
                 <TableCell className="hidden sm:table-cell">
-                  {parse(item.price)}
+                  {parse(item.price) === 0 ? item.price : parse(item.price)}
                 </TableCell>
                 <TableCell className="sm:table-cell">{item.quantity}</TableCell>
                 <TableCell className="text-right">
-                  {-parse(item.value)}
+                  {parse(item.value) === 0 ? item.price : parse(item.value)}
                 </TableCell>
               </TableRow>
             ))}
