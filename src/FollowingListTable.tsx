@@ -8,43 +8,49 @@ import {
 } from "@/components/ui/table";
 
 import { useEffect, useState } from "react";
-import { useUser } from "./UserContext";
 
-export function FollowingListTable({ coinData }) {
-	const { userId } = useUser();
-	const [followingList, setFollowingList] = useState<string[]>([]);
-	const [fullFollowingList, setFullFollowingList] = useState<string[]>([]);
+const currencyApiIP = import.meta.env.VITE_CURRENCY_API_IP || "localhost";
+
+export function FollowingListTable({ coinData, userId }) {
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+	const [trackingList, setTrackingList] = useState([]);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const data = await fetch("/TestUsers2.json").then((response) =>
-				response.json(),
-			);
-			const user = data.find((user: { _id: string }) => user._id === userId);
-			if (user) {
-				setFollowingList(user.tracking_list);
-			} else {
-				setFollowingList([]);
+		// Función para realizar el fetch GET
+		const fetchTrackingList = async () => {
+			setLoading(true);
+			setError(null);
+
+			try {
+				const response = await fetch(`${currencyApiIP}/track`, {
+					method: "GET",
+					headers: {
+						Authorization: userId,
+					},
+				});
+
+				if (!response.ok) {
+					throw new Error("Network response was not ok");
+				}
+
+				const data = await response.json();
+				setTrackingList(data); // Actualizar el estado con la lista de seguimiento obtenida
+				setLoading(false);
+			} catch (error) {
+				setError(error.message);
+				setLoading(false);
 			}
 		};
 
-		if (userId) {
-			fetchData();
-		}
-	}, [userId]);
+		// Llamar a la función para obtener la lista de seguimiento cuando el componente se monte
+		fetchTrackingList();
+	}, [userId]); // Ejecutar useEffect cada vez que userId cambie
 
-	useEffect(() => {
-		const fetchFullData = async () => {
-			const fullList = followingList.map((_id) =>
-				coinData.find((coin: { _id: string }) => coin._id === _id),
-			);
-			setFullFollowingList(fullList);
-		};
-
-		if (followingList.length > 0) {
-			fetchFullData();
-		}
-	}, [followingList]);
+	const filteredTrackingList = coinData.filter((coin) => {
+		// Verificar si el _id de la moneda está presente en la lista de seguimiento (trackingList)
+		return trackingList.includes(coin._id);
+	});
 
 	return (
 		<Table>
@@ -59,7 +65,7 @@ export function FollowingListTable({ coinData }) {
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{fullFollowingList.map((coin, index) => (
+				{filteredTrackingList.map((coin, index) => (
 					<TableRow key={index}>
 						<TableCell>
 							<div className="font-medium">{coin._id}</div>

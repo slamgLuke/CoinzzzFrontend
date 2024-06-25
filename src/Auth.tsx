@@ -4,10 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React from "react";
+// import { useUser, UserContextType } from "./UserContext";
+import UserContext, { UserContextType } from "./UserContext";
 
-const apiIP = process.env.USER_API_IP || "localhost";
+const apiIP = import.meta.env.VITE_USER_API_IP || "localhost";
 
 export class Auth extends React.Component {
+	static contextType = UserContext as React.Context<UserContextType>;
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -18,6 +21,7 @@ export class Auth extends React.Component {
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
 	}
 
 	handleLogin = async () => {
@@ -38,6 +42,8 @@ export class Auth extends React.Component {
 			}
 			const data = await response.json();
 			console.log("Login data:", data);
+			const { setUserId } = this.context as UserContextType;
+			setUserId(data.token);
 		} catch (error) {
 			console.error("Failed to login:", error);
 		} finally {
@@ -52,7 +58,7 @@ export class Auth extends React.Component {
 				email: this.state.email,
 				password: this.state.password,
 			};
-			const response = await fetch("api/register", {
+			const response = await fetch(`${apiIP}/register`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -71,17 +77,19 @@ export class Auth extends React.Component {
 		}
 	};
 
-	handleSubmit(event) {
+	handleSubmit = async (event) => {
 		event.preventDefault();
 		if (this.state.AuthType === "login") {
-			this.handleLogin();
+			await this.handleLogin();
+			window.location.href = "/";
 		} else {
-			this.handleRegister();
+			await this.handleRegister();
 			// reload page to login
+			this.state.AuthType = "register";
 			window.location.href = "/login";
 			window.location.reload();
 		}
-	}
+	};
 
 	handleChange(event) {
 		this.setState({

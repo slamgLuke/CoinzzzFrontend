@@ -6,9 +6,13 @@ import "./table.css";
 import FollowCoinMenu from "./components/FollowCoinMenu";
 // temporal
 import { useUser } from "./UserContext";
+import { useParams } from "react-router-dom";
+
+const currencyApiIP = import.meta.env.VITE_CURRENCY_API_IP || "localhost";
 
 export function Dashboard() {
-	const [activeTab, setActiveTab] = useState("monedas"); // Estado para la pestaña activa
+	const { activeTab } = useParams();
+	const [activeTabState, setActiveTabState] = useState(activeTab || "monedas");
 
 	const { userId, setUserId } = useUser();
 	const [coinData, setCoinData] = useState([]);
@@ -21,20 +25,23 @@ export function Dashboard() {
 	useEffect(() => {
 		const fetchData = async () => {
 			// const data = await fetch("/TestCoinData.json").then((response) =>
-			const data = await fetch("http://192.168.56.117:3000/currency").then(
-				(response) => response.json(),
+			console.log(`${currencyApiIP}/currency`);
+			const data = await fetch(`${currencyApiIP}/currency`).then((response) =>
+				response.json(),
 			);
+			console.log(data);
 			setCoinData(data);
 		};
 
 		fetchData();
+		console.log("current user: ", userId);
 	}, []);
 
 	return (
 		<div className="flex flex-col h-full">
 			<Tabs
-				defaultValue={activeTab}
-				onValueChange={setActiveTab}
+				defaultValue={activeTabState}
+				onValueChange={setActiveTabState}
 				className="pt-6 px-6"
 			>
 				<div className="flex flex-row items-center">
@@ -50,9 +57,9 @@ export function Dashboard() {
 							placeholder="Enter User ID"
 						/>
 					</div>
-					{activeTab === "seguimiento" && (
+					{activeTabState === "seguimiento" && (
 						<div className="ml-auto pr-4">
-							<FollowCoinMenu coinData={coinData} />
+							<FollowCoinMenu coinData={coinData} userId={userId} />
 						</div>
 					)}
 				</div>
@@ -60,7 +67,7 @@ export function Dashboard() {
 					<DashboardTable coinData={coinData} />
 				</TabsContent>
 				<TabsContent value="seguimiento" className="pt-8">
-					<FollowingListTable coinData={coinData} />
+					<FollowingListTable coinData={coinData} userId={userId} />
 				</TabsContent>
 			</Tabs>
 		</div>

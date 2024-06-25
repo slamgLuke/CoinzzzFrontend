@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -9,13 +9,36 @@ import {
 import { Input } from "@/components/ui/input";
 import { Plus, Search } from "lucide-react";
 import FollowCoinTable from "./FollowCoinTable";
+import { useNavigate } from "react-router-dom";
 
-export function FollowCoinMenu({ coinData }) {
+export function FollowCoinMenu({ coinData, userId }) {
 	const [searchTerm, setSearchTerm] = useState("");
+	const navigate = useNavigate();
+	let open = 0;
+	const setOpen = () => {
+		if (open < 2) {
+			open += 1;
+		} else {
+			window.location.href = "/dashboard/seguimiento";
+		}
+	};
 
 	const handleSearchChange = (event) => {
 		setSearchTerm(event.target.value);
 	};
+
+	const handleCloseDialog = () => {
+		// Aquí puedes ajustar la redirección según tu lógica
+		console.log("Dialog closed");
+		useNavigate()("/dashboard/seguimiento"); // Redirige a la pestaña 'seguimiento' de tu Dashboard
+	};
+
+	useEffect(() => {
+		// if (!open) {
+		// 	console.log("Dialog open: ", open);
+		// 	window.location.href = "/dashboard/seguimiento";
+		// }
+	}, [open]);
 
 	// const filteredCoinData = coinData.filter(
 	// 	(coin) =>
@@ -28,7 +51,7 @@ export function FollowCoinMenu({ coinData }) {
 	);
 
 	return (
-		<Dialog>
+		<Dialog onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<Button variant="ghost">
 					<Plus strokeWidth={3} />
@@ -49,7 +72,7 @@ export function FollowCoinMenu({ coinData }) {
 						</div>
 					</form>
 				</DialogHeader>
-				<FollowCoinTable coinData={filteredCoinData} />
+				<FollowCoinTable coinData={filteredCoinData} userId={userId} />
 			</DialogContent>
 		</Dialog>
 	);

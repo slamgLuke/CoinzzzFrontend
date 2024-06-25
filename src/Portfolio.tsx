@@ -3,9 +3,10 @@ import TransactionTable from "./TransactionTable";
 import plot from "./assets/plot.png";
 import PortfolioForm from "./components/PortfolioForm.tsx";
 
-
 import { useEffect, useState } from "react";
 import { useUser } from "./UserContext";
+
+const apiIP = import.meta.env.VITE_CURRENCY_API_IP || "localhost";
 
 export function Portfolio() {
 	const { userId } = useUser();
@@ -22,19 +23,21 @@ export function Portfolio() {
 
 		const fetchPortfolio = async () => {
 			try {
-				const response = await fetch("/TestUsers2.json");
+				const response = await fetch(`${apiIP}/portfolio`, {
+					method: "GET",
+					headers: {
+						// "Content-Type": "application/json",
+						Authorization: userId,
+					},
+				});
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}
 				const data = await response.json();
 				console.log("Fetched data:", data);
-				const user = data.find((user) => user._id === userId);
-				if (user) {
-					setPortfolio(user.portfolio);
-				} else {
-					setPortfolio({}); // No user found, set portfolio to null
-				}
+				setPortfolio(data);
 			} catch (error) {
+				setPortfolio({}); // No user found, set portfolio to null
 				console.error("Failed to fetch portfolio data:", error);
 			} finally {
 				setLoading(false); // Stop loading after data is fetched
@@ -42,7 +45,7 @@ export function Portfolio() {
 		};
 
 		fetchPortfolio();
-	}, [userId]);
+	}, []);
 
 	if (portfolio === undefined) {
 		console.log("useEffect not working");
@@ -92,7 +95,7 @@ export function Portfolio() {
 						<PortfolioForm />
 					</div>
 				</div>
-				<TransactionTable transactions={portfolio.transactions} />
+				<TransactionTable transactions={portfolio.transactions || []} />
 			</div>
 		</div>
 	);

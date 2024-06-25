@@ -9,47 +9,6 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 
-const transaction_data = [
-	{
-		coin: "BTC",
-		type: "Buy",
-		date: "14-04-2024",
-		price: "61,879.00",
-		quantity: "0.01",
-		usdtValue: "+ $618.79",
-	},
-	{
-		coin: "BTC",
-		type: "Sell",
-		date: "14-04-2024",
-		price: "61,879.00",
-		quantity: "0.01",
-		usdtValue: "- $618.79",
-	},
-	{
-		coin: "BTC",
-		type: "Buy",
-		date: "14-04-2024",
-		price: "61,879.00",
-		quantity: "0.01",
-		usdtValue: "+ $618.79",
-	},
-];
-
-// interface Transaction {
-// 	symbol: string;
-// 	type: "buy" | "sell";
-// 	date: string; // ISO date string
-// 	price: number;
-// 	quantity: number;
-// 	value: number;
-// }
-//
-// interface TransactionTableProps {
-// 	transactions: Transaction[];
-// }
-
-// export function TransactionTable({ transactions }: TransactionTableProps) {
 export function TransactionTable({ transactions }) {
 	console.log(transactions);
 	return (
@@ -76,7 +35,7 @@ export function TransactionTable({ transactions }) {
 						{transactions.map((item, index) => (
 							<TableRow key={index}>
 								<TableCell>
-									<div className="font-medium">{item._id}</div>
+									<div className="font-medium">{item.symbol}</div>
 								</TableCell>
 								<TableCell className="sm:table-cell">
 									<Badge
