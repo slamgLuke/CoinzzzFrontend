@@ -21,10 +21,8 @@ import {
 import { Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Search } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserContext, { UserContextType } from "../UserContext";
-import { useState } from "react";
 
 const currencyApiIP = import.meta.env.VITE_CURRENCY_API_IP || "localhost";
 
@@ -47,6 +45,11 @@ function isvalid(state) {
     alert("Date cannot be in the future");
     return false;
   }
+  // validate balance
+  if ((state.price * state.quantity) > state.portfolioNetworth && state.transactionType === "sell") {
+    alert("Insufficient balance to sell this quantity of coin");
+    return false;
+  }
 
   return true;
 }
@@ -62,8 +65,9 @@ export default class PortfolioForm extends React.Component {
       price: 1.0,
       quantity: 1,
       date: new Date().toISOString().split("T")[0],
-      coinData: props.coinData,
       inputValue: "",
+      coinData: props.coinData,
+      portfolioNetworth: props.portfolioNetworth,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
