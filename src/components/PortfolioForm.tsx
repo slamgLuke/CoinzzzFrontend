@@ -23,7 +23,7 @@ function isvalid(state) {
 		return false;
 	}
 	// validate Quantity
-	if (state.quantity < 0) {
+	if (state.quantity <= 0) {
 		alert("Quantity must be greater than 0");
 		return false;
 	}
@@ -92,18 +92,7 @@ export default class PortfolioForm extends React.Component {
 			} catch (error) {
 				console.error("Failed to post portfolio data:", error);
 			} finally {
-				alert(
-					"Form submitted: " +
-						this.state.coin +
-						" " +
-						this.state.transactionType +
-						" " +
-						this.state.price +
-						" " +
-						this.state.quantity +
-						" " +
-						this.state.date,
-				);
+        window.location.href = "/portfolio";
 			}
 		};
 		postPortfolio();
