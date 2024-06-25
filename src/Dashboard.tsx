@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 import DashboardTable from "./DashBoardTable";
 import FollowingListTable from "./FollowingListTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,44 +9,17 @@ import FollowCoinMenu from "./components/FollowCoinMenu";
 import { useUser } from "./UserContext";
 import { useParams } from "react-router-dom";
 
-const currencyApiIP = import.meta.env.VITE_CURRENCY_API_IP || "localhost";
-
 export function Dashboard() {
 	const { activeTab } = useParams();
 	const [activeTabState, setActiveTabState] = useState(activeTab || "monedas");
+	const { coinData, followList } = useOutletContext();
 
 	const { userId, setUserId } = useUser();
-	const [coinData, setCoinData] = useState([]);
-	const [followList, setFollowList] = useState([]);
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setUserId(event.target.value);
 		console.log(userId);
 	};
-
-	useEffect(() => {
-		const fetchCoinData = async () => {
-			// const data = await fetch("/TestCoinData.json").then((response) =>
-			console.log(`${currencyApiIP}/currency`);
-			const data = await fetch(`${currencyApiIP}/currency`).then((response) =>
-				response.json(),
-			);
-			setCoinData(data);
-		};
-
-		const fetchFollowList = async () => {
-			const data = await fetch(`${currencyApiIP}/track`, {
-				method: "GET",
-				headers: {
-					Authorization: userId,
-				},
-			}).then((response) => response.json());
-			setFollowList(data);
-		};
-
-		fetchCoinData();
-		fetchFollowList();
-	}, []);
 
 	return (
 		<div className="flex flex-col h-full">

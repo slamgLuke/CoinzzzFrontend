@@ -8,7 +8,17 @@ import {
 	BriefcaseBusiness,
 	Settings,
 } from "lucide-react";
-
+import {
+	Command,
+	CommandDialog,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+	CommandSeparator,
+	CommandShortcut,
+} from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -21,6 +31,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
+import "./searchBox.css";
 
 const activeLinkCss =
 	"flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary";
@@ -31,9 +42,21 @@ const inactiveLinkCss =
 const inactiveLinkCssMobile =
 	"mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground";
 
-export function MainBar() {
+export function MainBar({ coinData, followList }) {
 	const [activeLink, setActiveLink] = useState(
 		window.location.pathname.split("/")[1],
+	);
+
+	const [open, setOpen] = useState(false);
+	const [inputValue, setInputValue] = useState("");
+
+	const handleValueChange = (value: string) => {
+		setInputValue(value);
+		setOpen(!!value);
+	};
+
+	const filteredCoinData = coinData.filter((coin) =>
+		coin._id.toLowerCase().includes(inputValue.toLowerCase()),
 	);
 
 	function setCss(link: string) {
@@ -133,17 +156,28 @@ export function MainBar() {
 							</nav>
 						</SheetContent>
 					</Sheet>
-					<div className="w-full flex-1">
-						<form>
-							<div className="relative">
-								<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-								<Input
-									type="search"
-									placeholder="Search coins..."
-									className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
-								/>
-							</div>
-						</form>
+					<div className="w-full flex-1 relative">
+						<Command className="rounded-lg border shadow-md">
+							<CommandInput
+								placeholder="Type to search..."
+								onValueChange={handleValueChange}
+							/>
+							{
+								<CommandList className="absolute-command-list">
+									{open &&
+										filteredCoinData.length > 0 &&
+										filteredCoinData.map((coin) => (
+											<CommandItem
+												key={coin._id}
+												value={coin._id}
+												onSelect={(value) => alert(`Selected: ${value}`)}
+											>
+												{coin.name}
+											</CommandItem>
+										))}
+								</CommandList>
+							}
+						</Command>
 					</div>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
@@ -171,7 +205,7 @@ export function MainBar() {
 					</DropdownMenu>
 				</header>
 
-				<Outlet />
+				<Outlet context={{ coinData, followList }} />
 			</div>
 		</div>
 	);

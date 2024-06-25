@@ -1,0 +1,10 @@
+.absolute-command-list {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	z-index: 1000; /* Ajusta el z-index según sea necesario */
+	background: white; /* Asegura que el fondo sea blanco para una mejor visibilidad */
+	border: 1px solid #ccc; /* Puedes ajustar el borde para que coincida con el diseño */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añadir sombra para mejor visibilidad */
+}

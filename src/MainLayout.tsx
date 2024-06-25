@@ -1,11 +1,11 @@
-import { MainBar } from './MainBar';
+import { MainBar } from "./MainBar";
 
-export function MainLayout() {
-  return (
-    <div>
-      <MainBar />
-    </div>
-  )
+export function MainLayout({ coinData, followList }) {
+	return (
+		<div>
+			<MainBar coinData={coinData} followList={followList} />
+		</div>
+	);
 }
 
 export default MainLayout;
