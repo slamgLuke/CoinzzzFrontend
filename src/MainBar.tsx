@@ -32,6 +32,7 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
 import "./searchBox.css";
+import { useUser } from "./UserContext";
 
 const activeLinkCss =
 	"flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary";
@@ -49,6 +50,8 @@ export function MainBar({ coinData, followList }) {
 
 	const [open, setOpen] = useState(false);
 	const [inputValue, setInputValue] = useState("");
+
+	const { setUserId } = useUser();
 
 	const handleValueChange = (value: string) => {
 		setInputValue(value);
@@ -200,7 +203,14 @@ export function MainBar({ coinData, followList }) {
 							</Link>
 							<DropdownMenuItem>Support</DropdownMenuItem>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>Logout</DropdownMenuItem>
+							<DropdownMenuItem
+								onClick={() => {
+									setUserId("");
+									window.location.href = "/";
+								}}
+							>
+								Logout
+							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</header>

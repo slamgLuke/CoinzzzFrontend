@@ -11,6 +11,9 @@ import { Plus, Search } from "lucide-react";
 import FollowCoinTable from "./FollowCoinTable";
 
 export function FollowCoinMenu({ coinData, followList, userId }) {
+	if (userId == "") {
+		return <div />;
+	}
 	const [searchTerm, setSearchTerm] = useState("");
 	const [open, setOpen] = useState(false);
 	const firstTimeRef = useRef(true);
