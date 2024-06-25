@@ -85,9 +85,7 @@ export class Auth extends React.Component {
 		} else {
 			await this.handleRegister();
 			// reload page to login
-			this.state.AuthType = "register";
 			window.location.href = "/login";
-			window.location.reload();
 		}
 	};
 
