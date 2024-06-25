@@ -4,16 +4,30 @@ import React, { useState, useEffect } from "react";
 
 const currencyApiIP = import.meta.env.VITE_CURRENCY_API_IP || "localhost";
 
-export function FollowCoinTable({ coinData, userId }) {
+export function FollowCoinTable({ coinData, followList, userId }) {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [followListState, setFollowListState] = useState(followList);
 
-	const handleCheckedChange = (_id) => {
+	const handleCheckedChange = (_id, checked) => {
 		setLoading(true);
 		setError(null);
 
+		console.log("chcked", checked);
+
+		const method = checked ? "POST" : "DELETE";
+		console.log("method", method);
+
+		setFollowListState((prev) => {
+			if (checked) {
+				return [...prev, _id];
+			} else {
+				return prev.filter((id) => id !== _id);
+			}
+		});
+
 		fetch(`${currencyApiIP}/track`, {
-			method: "POST",
+			method: method,
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: userId, // Aquí se agrega userId como Authorization header
@@ -33,6 +47,8 @@ export function FollowCoinTable({ coinData, userId }) {
 			});
 	};
 
+	console.log("followList", followList);
+
 	return (
 		<div className="overflow-y-auto	max-h-80">
 			<Table className="">
@@ -40,7 +56,7 @@ export function FollowCoinTable({ coinData, userId }) {
 					{coinData.map((item, index) => (
 						<TableRow key={index}>
 							<TableCell>
-								<div className="font-medium">{item.symbol}</div>
+								<div className="font-medium">{item._id}</div>
 							</TableCell>
 							<TableCell className="hidden sm:table-cell">
 								{item.name}
@@ -48,8 +64,9 @@ export function FollowCoinTable({ coinData, userId }) {
 							<TableCell>
 								<Checkbox
 									className="h-4 w-4"
-									onCheckedChange={(_) => {
-										handleCheckedChange(item._id);
+									checked={followListState.includes(item._id)}
+									onCheckedChange={(checked) => {
+										handleCheckedChange(item._id, checked);
 									}}
 								/>
 							</TableCell>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -9,36 +9,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { Plus, Search } from "lucide-react";
 import FollowCoinTable from "./FollowCoinTable";
-import { useNavigate } from "react-router-dom";
 
-export function FollowCoinMenu({ coinData, userId }) {
+export function FollowCoinMenu({ coinData, followList, userId }) {
 	const [searchTerm, setSearchTerm] = useState("");
-	const navigate = useNavigate();
-	let open = 0;
-	const setOpen = () => {
-		if (open < 2) {
-			open += 1;
-		} else {
-			window.location.href = "/dashboard/seguimiento";
-		}
-	};
+	const [open, setOpen] = useState(false);
+	const firstTimeRef = useRef(true);
 
 	const handleSearchChange = (event) => {
 		setSearchTerm(event.target.value);
 	};
 
-	const handleCloseDialog = () => {
-		// Aquí puedes ajustar la redirección según tu lógica
-		console.log("Dialog closed");
-		useNavigate()("/dashboard/seguimiento"); // Redirige a la pestaña 'seguimiento' de tu Dashboard
+	const handleOnOpenChange = (isOpen) => {
+		setOpen(isOpen);
+		if (!isOpen && !firstTimeRef.current) {
+			window.location.href = "/dashboard/seguimiento";
+		}
+		firstTimeRef.current = false;
 	};
-
-	useEffect(() => {
-		// if (!open) {
-		// 	console.log("Dialog open: ", open);
-		// 	window.location.href = "/dashboard/seguimiento";
-		// }
-	}, [open]);
 
 	// const filteredCoinData = coinData.filter(
 	// 	(coin) =>
@@ -51,7 +38,7 @@ export function FollowCoinMenu({ coinData, userId }) {
 	);
 
 	return (
-		<Dialog onOpenChange={setOpen}>
+		<Dialog open={open} onOpenChange={handleOnOpenChange}>
 			<DialogTrigger asChild>
 				<Button variant="ghost">
 					<Plus strokeWidth={3} />
@@ -72,7 +59,11 @@ export function FollowCoinMenu({ coinData, userId }) {
 						</div>
 					</form>
 				</DialogHeader>
-				<FollowCoinTable coinData={filteredCoinData} userId={userId} />
+				<FollowCoinTable
+					coinData={filteredCoinData}
+					followList={followList}
+					userId={userId}
+				/>
 			</DialogContent>
 		</Dialog>
 	);

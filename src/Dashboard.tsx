@@ -11,77 +11,81 @@ import { useParams } from "react-router-dom";
 const currencyApiIP = import.meta.env.VITE_CURRENCY_API_IP || "localhost";
 
 export function Dashboard() {
-  const { activeTab } = useParams();
-  const [activeTabState, setActiveTabState] = useState(activeTab || "monedas");
+	const { activeTab } = useParams();
+	const [activeTabState, setActiveTabState] = useState(activeTab || "monedas");
 
-  const { userId, setUserId } = useUser();
-  const [coinData, setCoinData] = useState([]);
-  const [followList, setFollowList] = useState([]);
+	const { userId, setUserId } = useUser();
+	const [coinData, setCoinData] = useState([]);
+	const [followList, setFollowList] = useState([]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserId(event.target.value);
-    console.log(userId);
-  };
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setUserId(event.target.value);
+		console.log(userId);
+	};
 
-  useEffect(() => {
-    const fetchCoinData = async () => {
-      // const data = await fetch("/TestCoinData.json").then((response) =>
-      console.log(`${currencyApiIP}/currency`);
-      const data = await fetch(`${currencyApiIP}/currency`).then((response) =>
-        response.json(),
-      );
-      setCoinData(data);
-    };
+	useEffect(() => {
+		const fetchCoinData = async () => {
+			// const data = await fetch("/TestCoinData.json").then((response) =>
+			console.log(`${currencyApiIP}/currency`);
+			const data = await fetch(`${currencyApiIP}/currency`).then((response) =>
+				response.json(),
+			);
+			setCoinData(data);
+		};
 
-    const fetchFollowList = async () => {
-      const data = await fetch(`${currencyApiIP}/track`, {
-        method: "GET",
-        headers: {
-          Authorization: userId,
-        },
-      }).then((response) => response.json());
-      setFollowList(data);
-    };
+		const fetchFollowList = async () => {
+			const data = await fetch(`${currencyApiIP}/track`, {
+				method: "GET",
+				headers: {
+					Authorization: userId,
+				},
+			}).then((response) => response.json());
+			setFollowList(data);
+		};
 
-    fetchCoinData();
-    fetchFollowList();
-  }, []);
+		fetchCoinData();
+		fetchFollowList();
+	}, []);
 
-  return (
-    <div className="flex flex-col h-full">
-      <Tabs
-        defaultValue={activeTabState}
-        onValueChange={setActiveTabState}
-        className="pt-6 px-6"
-      >
-        <div className="flex flex-row items-center">
-          <TabsList className="grid w-full grid-cols-2 w-[400px]">
-            <TabsTrigger value="monedas">Monedas</TabsTrigger>
-            <TabsTrigger value="seguimiento">Lista de seguimiento</TabsTrigger>
-          </TabsList>
-          <div className="pl-4">
-            <input
-              type="text"
-              value={userId}
-              onChange={handleInputChange}
-              placeholder="Enter User ID"
-            />
-          </div>
-          {activeTabState === "seguimiento" && (
-            <div className="ml-auto pr-4">
-              <FollowCoinMenu coinData={coinData} userId={userId} />
-            </div>
-          )}
-        </div>
-        <TabsContent value="monedas" className="pt-8">
-          <DashboardTable coinData={coinData} />
-        </TabsContent>
-        <TabsContent value="seguimiento" className="pt-8">
-          <FollowingListTable coinData={coinData} followList={followList} />
-        </TabsContent>
-      </Tabs>
-    </div>
-  );
+	return (
+		<div className="flex flex-col h-full">
+			<Tabs
+				defaultValue={activeTabState}
+				onValueChange={setActiveTabState}
+				className="pt-6 px-6"
+			>
+				<div className="flex flex-row items-center">
+					<TabsList className="grid w-full grid-cols-2 w-[400px]">
+						<TabsTrigger value="monedas">Monedas</TabsTrigger>
+						<TabsTrigger value="seguimiento">Lista de seguimiento</TabsTrigger>
+					</TabsList>
+					<div className="pl-4">
+						<input
+							type="text"
+							value={userId}
+							onChange={handleInputChange}
+							placeholder="Enter User ID"
+						/>
+					</div>
+					{activeTabState === "seguimiento" && (
+						<div className="ml-auto pr-4">
+							<FollowCoinMenu
+								coinData={coinData}
+								followList={followList}
+								userId={userId}
+							/>
+						</div>
+					)}
+				</div>
+				<TabsContent value="monedas" className="pt-8">
+					<DashboardTable coinData={coinData} />
+				</TabsContent>
+				<TabsContent value="seguimiento" className="pt-8">
+					<FollowingListTable coinData={coinData} followList={followList} />
+				</TabsContent>
+			</Tabs>
+		</div>
+	);
 }
 
 export default Dashboard;
