@@ -69,6 +69,10 @@ export function Portfolio() {
     return <div>Please login to view your portfolio</div>;
   }
 
+  function parse(value: number) {
+    return Math.round((value + Number.EPSILON) * 100) / 100;
+  }
+
   return (
     <div>
       <div className="flex flex1 flex-col align-top">
@@ -80,7 +84,7 @@ export function Portfolio() {
         <div className="flex flex-col items-center justify-center pb-16">
           <Card className="items-center justify-center px-16 py-4">
             <CardDescription>Your Net</CardDescription>
-            <CardTitle className="text-4xl">{networth === undefined ? 0 : networth} USDT</CardTitle>
+            <CardTitle className="text-4xl">{networth === undefined ? 0 : -parse(networth)} USDT</CardTitle>
             <div className="text-xs text-muted-foreground">
               {/* porcentaje de incremento */}
             </div>
