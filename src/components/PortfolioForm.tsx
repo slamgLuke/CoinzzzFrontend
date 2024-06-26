@@ -112,10 +112,11 @@ export default class PortfolioForm extends React.Component {
         // console.log("Posted data:", data);
       } catch (error) {
         console.error("Failed to post portfolio data:", error);
+      } finally {
+        window.location.reload();
       }
     };
     postPortfolio();
-    window.location.reload();
   }
 
   handleChange(event) {
