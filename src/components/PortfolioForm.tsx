@@ -47,6 +47,7 @@ function isvalid(state) {
   }
   // validate balance
   if ((state.price * state.quantity) > state.portfolioNetworth && state.transactionType === "sell") {
+    console.log(state.portfolioNetworth, state.price * state.quantity)
     alert("Insufficient balance to sell this quantity of coin");
     return false;
   }
@@ -111,11 +112,10 @@ export default class PortfolioForm extends React.Component {
         // console.log("Posted data:", data);
       } catch (error) {
         console.error("Failed to post portfolio data:", error);
-      } finally {
-        window.location.href = "/portfolio";
       }
     };
     postPortfolio();
+    window.location.reload();
   }
 
   handleChange(event) {
@@ -148,6 +148,8 @@ export default class PortfolioForm extends React.Component {
     const filteredCoinData = this.state.coinData.filter((coin) =>
       coin._id.toLowerCase().includes(this.state.inputValue.toLowerCase()),
     );
+
+    console.log("portfolio networth: ", this.state.portfolioNetworth);
 
     return (
       <Dialog>

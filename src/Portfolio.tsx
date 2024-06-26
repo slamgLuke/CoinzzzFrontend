@@ -99,7 +99,7 @@ export function Portfolio() {
         </div>
         <div className="flex flex-col item-center justify-start">
           <div className="w-24 ml-auto pr-4">
-            <PortfolioForm coinData={coinData} portfolioNetworth={networth === undefined ? 0 : networth} />
+            <PortfolioForm coinData={coinData} portfolioNetworth={portfolio.networth} />
           </div>
         </div>
         <TransactionTable transactions={portfolio.transactions || []} />
