@@ -9,7 +9,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export function TransactionTable({ transactions }) {
+function getCoinPrice(coinData, symbol) {
+  let coin = coinData.find((coin) => coin.symbol === symbol);
+  return coin ? coin.price : 0;
+}
+
+function getValueChange(coinData, symbol, price) {
+  let coin = coinData.find((coin) => coin.symbol === symbol);
+  return coin ? ((coin.price - price) / price) * 100 : 0;
+}
+
+export function TransactionTable(transactions, coinData) {
   function parse(value: string) {
     let value_float = parseFloat(value);
     return Math.round((value_float + Number.EPSILON) * 100) / 100;
@@ -33,6 +43,7 @@ export function TransactionTable({ transactions }) {
                 Quantity
               </TableHead>
               <TableHead className="text-right">USDT Value</TableHead>
+              <TableHead className="text-right">Change</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -62,6 +73,14 @@ export function TransactionTable({ transactions }) {
                 <TableCell className="sm:table-cell">{item.quantity}</TableCell>
                 <TableCell className="text-right">
                   {parse(item.value) === 0 ? item.price : parse(item.value)}
+                </TableCell>
+                <TableCell className="text-right">
+                  {parse(
+                    getValueChange(coinData, item.symbol, item.price)
+                  ) === 0
+                    ? getValueChange(coinData, item.symbol, item.price)
+                    : parse(getValueChange(coinData, item.symbol, item.price).toString())}
+                  %
                 </TableCell>
               </TableRow>
             ))}

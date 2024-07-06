@@ -9,6 +9,13 @@ import { useOutletContext } from "react-router-dom";
 
 const apiIP = import.meta.env.VITE_CURRENCY_API_IP || "localhost";
 
+function calculateNetworth(transactions, coinData) {
+  return transactions.reduce((acc, transaction) => {
+    const coin = coinData.find((coin) => coin.symbol === transaction.symbol);
+    return acc + transaction.quantity * coin.price;
+  }, 0);
+}
+
 export function Portfolio() {
   const { userId } = useUser();
   console.log("userId", userId);
@@ -86,7 +93,7 @@ export function Portfolio() {
         <div className="flex flex-col items-center justify-center pb-16">
           <Card className="items-center justify-center px-16 py-4">
             <CardDescription>Your Net</CardDescription>
-            <CardTitle className="text-4xl">{networth === undefined ? 0 : parse(networth)} USDT</CardTitle>
+            <CardTitle className="text-4xl">{networth === undefined ? 0 : parse(calculateNetworth(portfolio.transactions, coinData))} USDT</CardTitle>
             <div className="text-xs text-muted-foreground">
               {/* porcentaje de incremento */}
             </div>
@@ -99,10 +106,14 @@ export function Portfolio() {
         </div>
         <div className="flex flex-col item-center justify-start">
           <div className="w-24 ml-auto pr-4">
-            <PortfolioForm coinData={coinData} portfolioNetworth={portfolio.networth} />
+            <PortfolioForm coinData={coinData}
+              portfolioNetworth={portfolio.transactions.reduce(
+                (acc, transaction) => acc + transaction.value,
+                0
+              )} />
           </div>
         </div>
-        <TransactionTable transactions={portfolio.transactions || []} />
+        <TransactionTable transactions={portfolio.transactions || []} coinData={coinData} />
       </div>
     </div>
   );
