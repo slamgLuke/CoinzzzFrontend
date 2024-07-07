@@ -98,14 +98,6 @@ export function MainBar({ coinData, followList }) {
 								<BriefcaseBusiness className="h-4 w-4" />
 								Portfolio
 							</Link>
-							<Link
-								to="settings"
-								className={setCss("settings")}
-								onClick={() => setActiveLink("settings")}
-							>
-								<Settings className="h-4 w-4" />
-								Settings{" "}
-							</Link>
 						</nav>
 					</div>
 				</div>
