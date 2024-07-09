@@ -122,7 +122,7 @@ export function MainBar({ coinData, followList }) {
 									className="flex items-center gap-2 text-lg font-semibold"
 								>
 									<Coins className="h-6 w-6" />
-									<span className="sr-only">Acme Inc</span>
+									<span className="sr-only">Coinzzz</span>
 								</Link>
 								<Link
 									to="dashboard"
@@ -139,14 +139,6 @@ export function MainBar({ coinData, followList }) {
 								>
 									<BriefcaseBusiness className="h-5 w-5" />
 									Portfolio
-								</Link>
-								<Link
-									to="settings"
-									className={setCssMobile("settings")}
-									onClick={() => setActiveLink("settings")}
-								>
-									<Settings className="h-5 w-5" />
-									Settings
 								</Link>
 							</nav>
 						</SheetContent>
@@ -165,7 +157,7 @@ export function MainBar({ coinData, followList }) {
 											<CommandItem
 												key={coin._id}
 												value={coin._id}
-												onSelect={(value) => alert(`Selected: ${value}`)}
+												onSelect={(value) => window.location.href = `/coin/${value}`}
 											>
 												{coin.name}
 											</CommandItem>

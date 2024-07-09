@@ -65,6 +65,15 @@ function displayChange(value, str) {
   return parse(value) + str;
 }
 
+function sortDataByDate(data) {
+  if (data === undefined) {
+    return [];
+  }
+  return data.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+}
+
 export function Portfolio() {
   const { userId } = useUser();
   console.log("userId", userId);
@@ -160,7 +169,7 @@ export function Portfolio() {
               {!checkData(portfolio, coinData)
                 ? 0
                 : displayChange(
-                  ((calculateNetworth(portfolio.transactions, coinData) -
+                  (Math.abs(calculateNetworth(portfolio.transactions, coinData) -
                     originalNetworth(portfolio.transactions)) /
                     originalNetworth(portfolio.transactions)) *
                   100,
@@ -177,7 +186,7 @@ export function Portfolio() {
         <div className="flex flex-col item-center justify-start">
           <div className="w-24 ml-auto pr-4">
             <PortfolioForm
-              transactions={portfolio.transactions || []}
+              transactions={sortDataByDate(portfolio.transactions)}
               coinData={coinData}
             />
           </div>
