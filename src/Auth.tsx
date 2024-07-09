@@ -44,10 +44,12 @@ export class Auth extends React.Component {
 			console.log("Login data:", data);
 			const { setUserId } = this.context as UserContextType;
 			setUserId(data.token);
+      window.location.href = "/";
 		} catch (error) {
 			console.error("Failed to login:", error);
+      alert("Failed to login: " + error);
 		} finally {
-			alert("Login: " + this.state.email + " " + this.state.password);
+			// alert("Login: " + this.state.email + " " + this.state.password);
 		}
 		// TODO: store token
 	};
@@ -70,10 +72,12 @@ export class Auth extends React.Component {
 			}
 			const data = await response.json();
 			console.log("Registered data:", data);
+      window.location.href = "/login"
 		} catch (error) {
 			console.error("Failed to register:", error);
+      alert("Failed to register: " + error);
 		} finally {
-			alert("Register: " + this.state.email + " " + this.state.password);
+			// alert("Register: " + this.state.email + " " + this.state.password);
 		}
 	};
 
@@ -81,11 +85,11 @@ export class Auth extends React.Component {
 		event.preventDefault();
 		if (this.state.AuthType === "login") {
 			await this.handleLogin();
-			window.location.href = "/";
+			// window.location.href = "/";
 		} else {
 			await this.handleRegister();
 			// reload page to login
-			window.location.href = "/login";
+			// window.location.href = "/login";
 		}
 	};
 
