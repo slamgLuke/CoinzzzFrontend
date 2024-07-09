@@ -45,10 +45,18 @@ function isvalid(state) {
     alert("Date cannot be in the future");
     return false;
   }
-  // validate balance
-  if ((state.price * state.quantity) > state.portfolioNetworth && state.transactionType === "sell") {
-    console.log(state.portfolioNetworth, state.price * state.quantity)
-    alert("Insufficient balance to sell this quantity of coin");
+  // validate coin count
+  let coinCount = 0.0;
+  state.transactions.forEach((transaction) => {
+    console.log("transaction: ", transaction);
+    if (transaction.symbol === state.coin && transaction.type === "buy") {
+      coinCount += parseFloat(transaction.quantity);
+    } else if (transaction.symbol === state.coin && transaction.type === "sell") {
+      coinCount -= parseFloat(transaction.quantity);
+    }
+  });
+  if (state.transactionType === "sell" && state.quantity > coinCount) {
+    alert("You do not have enough coins to sell");
     return false;
   }
 
@@ -68,7 +76,7 @@ export default class PortfolioForm extends React.Component {
       date: new Date().toISOString().split("T")[0],
       inputValue: "",
       coinData: props.coinData,
-      portfolioNetworth: props.portfolioNetworth,
+      transactions: props.transactions,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);

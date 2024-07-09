@@ -23,6 +23,9 @@ function parse(value: number) {
 function calculateNetworth(transactions, coinData) {
   let coin_list = {};
   let symbol_list = [];
+  if (transactions === undefined) {
+    return 0;
+  }
   transactions.forEach((transaction) => {
     if (coin_list[transaction.symbol] === undefined) {
       coin_list[transaction.symbol] = 0;
@@ -40,13 +43,18 @@ function calculateNetworth(transactions, coinData) {
   let networth = 0;
   symbol_list.forEach((symbol) => {
     let coin = coinData.find((coin) => coin._id === symbol);
-    networth += coin_list[symbol] * parseFloat(coin.price);
+    if (coin !== undefined) {
+      networth += coin_list[symbol] * parseFloat(coin.price);
+    }
   });
 
   return networth;
 }
 
 function originalNetworth(transactions) {
+  if (transactions === undefined) {
+    return 0;
+  }
   return transactions.reduce((acc, transaction) => acc + transaction.value, 0);
 }
 
@@ -135,29 +143,29 @@ export function Portfolio() {
               {!checkData(portfolio, coinData)
                 ? 0
                 : parse(
-                    calculateNetworth(portfolio.transactions, coinData),
-                  )}{" "}
+                  calculateNetworth(portfolio.transactions, coinData),
+                )}{" "}
               USDT
             </CardTitle>
             <div className="text-xs text-muted-foreground">
               {!checkData(portfolio, coinData)
                 ? 0
                 : displayChange(
-                    calculateNetworth(portfolio.transactions, coinData) -
-                      originalNetworth(portfolio.transactions),
-                    " USDT",
-                  )}
+                  calculateNetworth(portfolio.transactions, coinData) -
+                  originalNetworth(portfolio.transactions),
+                  " USDT",
+                )}
             </div>
             <div className="text-xs text-muted-foreground">
               {!checkData(portfolio, coinData)
                 ? 0
                 : displayChange(
-                    ((calculateNetworth(portfolio.transactions, coinData) -
-                      originalNetworth(portfolio.transactions)) /
-                      originalNetworth(portfolio.transactions)) *
-                      100,
-                    "%",
-                  )}
+                  ((calculateNetworth(portfolio.transactions, coinData) -
+                    originalNetworth(portfolio.transactions)) /
+                    originalNetworth(portfolio.transactions)) *
+                  100,
+                  "%",
+                )}
             </div>
             <img src={plot} alt="plot" className="hidden" />
           </Card>
@@ -169,11 +177,8 @@ export function Portfolio() {
         <div className="flex flex-col item-center justify-start">
           <div className="w-24 ml-auto pr-4">
             <PortfolioForm
+              transactions={portfolio.transactions || []}
               coinData={coinData}
-              portfolioNetworth={portfolio.transactions.reduce(
-                (acc, transaction) => acc + transaction.value,
-                0,
-              )}
             />
           </div>
         </div>
