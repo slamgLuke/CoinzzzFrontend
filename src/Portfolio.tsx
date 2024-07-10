@@ -165,17 +165,6 @@ export function Portfolio() {
                   " USDT",
                 )}
             </div>
-            <div className="text-xs text-muted-foreground">
-              {!checkData(portfolio, coinData)
-                ? 0
-                : displayChange(
-                  (Math.abs(calculateNetworth(portfolio.transactions, coinData) -
-                    originalNetworth(portfolio.transactions)) /
-                    originalNetworth(portfolio.transactions)) *
-                  100,
-                  "%",
-                )}
-            </div>
             <img src={plot} alt="plot" className="hidden" />
           </Card>
         </div>
