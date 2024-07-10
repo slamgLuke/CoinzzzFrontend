@@ -13,6 +13,10 @@ export function FollowingListTable({ coinData, followList }) {
     return followList.includes(coin._id);
   });
 
+  function round3(num) {
+    return Math.round(num * 1000) / 1000;
+  }
+
   return (
     <Table>
       <TableHeader>
@@ -34,7 +38,7 @@ export function FollowingListTable({ coinData, followList }) {
             <TableCell className="hidden sm:table-cell">
               {coin.marketCap}
             </TableCell>
-            <TableCell className="text-center">{coin.price}</TableCell>
+            <TableCell className="text-center">{round3(parseFloat(coin.price))}</TableCell>
             <TableCell className="hidden md:table-cell">{coin.today}</TableCell>
             <TableCell className="hidden md:table-cell">{coin.week}</TableCell>
             <TableCell className="hidden sm:table-cell">TEMP</TableCell>

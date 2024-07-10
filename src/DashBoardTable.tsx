@@ -8,6 +8,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+function round3(num) {
+  return Math.round(num * 1000) / 1000;
+}
+
 export default function DashboardTable({ coinData }) {
   return (
     <Table>
@@ -29,7 +33,7 @@ export default function DashboardTable({ coinData }) {
             <TableCell className="hidden sm:table-cell">
               {item.marketCap}
             </TableCell>
-            <TableCell className="text-center">{item.price}</TableCell>
+            <TableCell className="text-center">{round3(parseFloat(item.price))}</TableCell>
             <TableCell className="hidden md:table-cell">{item.today}</TableCell>
             <TableCell className="hidden md:table-cell">{item.week}</TableCell>
           </TableRow>
